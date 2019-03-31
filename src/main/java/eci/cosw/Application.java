@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -49,7 +51,10 @@ public class Application implements CommandLineRunner {
         for (Customer customer : customerRepository.findAll()) {
             System.out.println(customer);
         }
-        System.out.println();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("firstName").is("Alice"));
+
+        Customer customer = mongoOperation.findOne(query, Customer.class);
 
 
     }
